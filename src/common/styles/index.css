@@ -1,0 +1,155 @@
+.app_container {
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+}
+
+.app {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: aliceblue;
+    height: 100%;
+    width: 100%;
+    padding: 15px;
+    width: 950px;
+}
+
+.list_component {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 600px;
+    border: 1px solid brown;
+    padding: 20px;
+    margin-right: 10px;
+}
+
+.list_item {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid burlywood;
+    width: 580px;
+    margin-bottom: 10px;
+}
+
+.list_item_text{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+.list_item_buttons {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.rightbar_component {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid brown;
+    padding: 10px;
+}
+
+.form_component {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid burlywood;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 250px;
+    border-radius: 1%;
+}
+
+.form input {
+    width: 100%;
+    height: 30px;
+    border-radius: 5%;
+    border: 1px solid burlywood;
+    margin-bottom: 15px;
+}
+
+.form_buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.form_buttons button{
+    height: 30px;
+    border: 1px solid blanchedalmond;
+    border-radius: 5%;
+    background-color: burlywood;
+    margin-right: 15px;
+}
+
+.form_buttons button:hover{
+    cursor: pointer;
+    border: 1px solid brown;
+}
+
+.error {
+    display:block;
+    color: red;
+    margin-top: -13px;
+}
+
+.login_register_switch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login_register_switch button {
+    height: 30px;
+    margin-right: 15px;
+    background-color: cornsilk;
+    border: 1px solid burlywood;
+}
+
+.login_register_switch button:hover {
+    height: 30px;
+    margin-right: 10px;
+    background-color: cornsilk;
+    border: 1px solid brown;
+    cursor: pointer;
+}
+
+.pagination {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.pagination li {
+    display: flex;
+    border: 1px solid blanchedalmond;
+    margin-left: 15px;
+    background-color: cornsilk;
+    color: black;
+    font-weight: bolder;
+}
+
+.pagination li:hover {
+    background-color:burlywood;
+    cursor: pointer;
+}
+
+li.active {
+    background-color:burlywood;
+    border: 2px solid blanchedalmond;
+}
+.pagination li a {
+    padding: 10px;
+}
