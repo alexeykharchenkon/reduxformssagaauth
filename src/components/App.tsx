@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { RightBar } from '@components/RightBar/RightBar';
 import { User, Post } from '@common/types';
 import { mapDispatchToProps, mapStateToProps } from '@common/services/initAppProps';
+import { MessageComponent } from '@common/components/MessageComponent';
 
 interface AppProps {
   activePost: any;
@@ -18,30 +19,39 @@ interface AppProps {
   isLogged: boolean;
   loginFormState: any;
   pageCount: any;
+  mesType: any;
+  mesText: string;
+  isOpen: boolean;
+  messageActions: any;
+  authMessage: string;
+  authType: any;
 }
 
-const App = ({activePost, initializePost, postsActions, authActions, posts, 
-  user, isLogged, loginFormState, pageCount, pageActions}: AppProps) => {
+const App = ({ activePost, initializePost, postsActions, authActions, posts, 
+  user, isLogged, loginFormState, pageCount, pageActions, mesType, mesText, 
+  isOpen, messageActions, authMessage, authType }: AppProps) => {
  
    const {addPost, editPost, updatePost, deletePost} = postsActions; 
-   const {login, register, logout, loginFormChange} = authActions;
+   const {login, register, logout, getProfile, loginFormChange} = authActions;
    const {changePage} = pageActions;
+   const {openMessage, closeMessage} = messageActions;
 
    const handleSubmit = (values: any) => {
-      Boolean(activePost) ? 
-      updatePost({ id: values.id, title: values.title, text: values.text }) :
-      addPost({ id: uuidv4(), title: values.title, text: values.text });
-      initializePost(activePost);
+     isLogged ?
+      Boolean(activePost) ? updatePost({...values}) : addPost({...values, id: uuidv4()})
+     : openMessage({type: "error", text: "Authorisation is Required!"});
+  }
+  const loginSubmit = (values: any) => login({...values});
+  const registerSubmit = (values: any) => register({...values});
+  const logoutSubmit = () => {
+    localStorage.removeItem("token");
+    logout();
   }
 
-  const loginSubmit = (values: any) => {
-      login({login: values.login, password: values.password});
-  }
-
-  const registerSubmit = (values: any) => {
-    register({login: values.login, password: values.password});
-  }
-
+  useEffect(() => {
+    if(authMessage !== "") openMessage({type: authType, text: authMessage});
+  }, [authMessage, authType]);
+  useEffect(() => getProfile(), [getProfile]);
   useEffect(() => initializePost(activePost), [activePost, initializePost]);
 
   return (
@@ -61,9 +71,15 @@ const App = ({activePost, initializePost, postsActions, authActions, posts,
           loginFormChange={loginFormChange}
           user={user}
           logState={loginFormState}
-          logout={logout}
+          logout={logoutSubmit}
         />
       </div>
+      <MessageComponent 
+        isOpen={isOpen}
+        message={mesText}
+        type={mesType}
+        closeMessage={closeMessage}
+      />
     </div>
   );
 }

@@ -1,5 +1,7 @@
-import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { Field, reduxForm, InjectedFormProps, reset } from 'redux-form';
 import { Typography, Card } from '@material-ui/core';
+
+const resetForm = (result: any, dispatch: any) => dispatch(reset('postForm'));
 
 const validate = (values: any) => {
     const errors = {title: '', text: ''};
@@ -63,4 +65,9 @@ const Form = ({ handleSubmit, reset, initialized }: InjectedFormProps) => {
     );
 }
 
-export const PostForm = reduxForm({form: 'postForm', validate, warn})(Form);
+export const PostForm = reduxForm({
+    form: 'postForm', 
+    onSubmitSuccess: resetForm,
+    validate, 
+    warn
+})(Form);

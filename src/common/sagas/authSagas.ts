@@ -1,25 +1,76 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { loginSuccess, registerSuccess } from "@store/actionCreators/authActions";
-import { USER_LOGIN, USER_REGISTER } from "@store/actions";
+import { loginSuccess, registerSuccess, loginFailure } from "@store/actionCreators/authActions";
+import { USER_LOGIN, USER_REGISTER, GET_PROFILE } from "@store/actions";
+import axios from "axios";
 
-function* watchLogin() {
-    yield takeEvery(USER_LOGIN, login);
+const authUrl = "https://localhost:44370/api/Users";
+const postUrl = "https://localhost:44370/api/Posts";
+
+function* watchLogin() { yield takeEvery(USER_LOGIN, loginAsync)}
+function* watchRegister() { yield takeEvery(USER_REGISTER, registerAsync)}
+function* watchGetProfile() { yield takeEvery(GET_PROFILE, getProfileAsync)}
+
+function* loginAsync({ payload }: any) : any {
+  try {
+    const data = yield call(() =>
+     axios.post(authUrl + "/login", {
+        login: payload.user.login,
+        password: payload.user.password
+      }).then(res => res.data)
+    );
+
+    if(data.error) yield put(loginFailure(data.error));
+    else{
+      localStorage.setItem("token", data.encodedJwt);
+      yield put(loginSuccess(data.user));
+    } 
+  } catch (error) {}
+ // yield put(loginSuccess(payload.user));
 }
 
-function* login({ payload }: any) : any {
-  yield put(loginSuccess(payload.user));
+function* registerAsync({ payload }: any) : any {
+ // yield put(registerSuccess(payload.user));
+  try {
+    const data = yield call(() =>
+    axios.post(authUrl + "/register", {
+        login: payload.user.login,
+        password: payload.user.password
+      }).then(res => res.data)
+    );
+
+    localStorage.setItem("token", data.encodedJwt);
+    
+    yield put(registerSuccess(data.user));
+  } catch (error) {
+    //  yield put(loginFailure(error));
+  }
 }
 
-function* watchRegister() {
-  yield takeEvery(USER_REGISTER, register);
-}
+function* getProfileAsync() : any {
+  const token = localStorage.token;
+ // const user = {id: "1", login: "User1", password: "Password"}
+ // yield put(loginSuccess(user));
 
-function* register({ payload }: any) : any {
-  yield put(registerSuccess(payload.user));
+  try {
+    const data = yield call(() =>
+    axios.post(authUrl + "/loginJwt", 
+      {
+        headers: {
+        "Accept": "application/json",
+        "Authorization": "Bearer " + token
+        }
+      }).then(res => res.data)
+    );
+    
+    yield put(loginSuccess(data.user));
+  } catch (error) {
+    //  yield put(loginFailure(error));
+  }
 }
 
 export default [
     watchLogin(),
     watchRegister(),
+    watchGetProfile() 
   ];
   

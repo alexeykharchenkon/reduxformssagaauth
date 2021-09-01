@@ -9,3 +9,9 @@ export interface User {
     login: string;
     password: string;
 }
+
+export interface Message {
+    type: any;
+    isOpen: boolean;
+    text: string;
+}

@@ -1,6 +1,7 @@
 import * as postsActions from '@store/actionCreators/postsActions';
 import * as authActions from '@store/actionCreators/authActions';
 import * as pageActions from '@store/actionCreators/pageActions';
+import * as messageActions from '@store/actionCreators/messageActions';
 import { bindActionCreators } from 'redux';
 import { initialize } from 'redux-form';
 import { Post } from '@common/types';
@@ -23,12 +24,18 @@ export const mapStateToProps = (state: any) => ({
     isLogged: state.userState.isLogged,
     loginFormState: state.userState.loginFormState,
     pageCount: pageCountCalc(state.postsState.posts, state.pageState.itemsPerPage),
+    mesType: state.messageState.type,
+    mesText: state.messageState.text,
+    isOpen: state.messageState.isOpen,
+    authMessage: state.userState.message, 
+    authType: state.userState.type 
   });
   
 export const mapDispatchToProps = (dispatch: any) => ({
     initializePost: (post: any) => dispatch(initialize('postForm', post)),
     postsActions: bindActionCreators(postsActions, dispatch),
     authActions: bindActionCreators(authActions, dispatch),
-    pageActions: bindActionCreators(pageActions, dispatch)
+    pageActions: bindActionCreators(pageActions, dispatch),
+    messageActions: bindActionCreators(messageActions, dispatch)
   });
   

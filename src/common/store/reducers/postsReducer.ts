@@ -40,7 +40,6 @@ export const postsReducer = (state: any = initialState, action: any) => {
                  ...state,
                 posts: state.posts.filter((p: Post) => p.id !== action.payload)
             }
-
         case EDIT_POST:
             return {
                 ...state,
