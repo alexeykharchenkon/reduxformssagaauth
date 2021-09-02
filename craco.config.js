@@ -9,6 +9,8 @@ module.exports = {
             '@common': resolvePath('./src/common'),
             '@components': resolvePath('./src/components'),
             '@store': resolvePath('./src/common/store'),
+            '@services': resolvePath('./src/common/services'),
+            '@sagas': resolvePath('./src/common/sagas'),
         }
     },
   

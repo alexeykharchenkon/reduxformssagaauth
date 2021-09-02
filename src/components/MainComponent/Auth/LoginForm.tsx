@@ -1,6 +1,5 @@
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
 
 const validate = (values: any) => {
     const errors = {login: '', password: ''};
@@ -18,7 +17,7 @@ const warn = (values: any) => {
 
 const renderField = ({input, label, type, meta: { touched, error, warning }}: any) => (
     <div>
-        <label>
+        <label htmlFor="text">
             <Typography variant="subtitle1" gutterBottom>{label}</Typography>
         </label>
       <div>
@@ -32,9 +31,9 @@ const renderField = ({input, label, type, meta: { touched, error, warning }}: an
 
 const Form = ({ handleSubmit, reset }: InjectedFormProps) => {
     return (
-        <Card className="form_component">
+        <>
             <Typography variant="h5" gutterBottom>
-                Register
+                Login
              </Typography>
             <form onSubmit={handleSubmit} className="form">
                 <Field name="id" component="input" hidden /> 
@@ -43,13 +42,13 @@ const Form = ({ handleSubmit, reset }: InjectedFormProps) => {
                 <div className="form_buttons">
                     <button type="submit">
                         <Typography variant="button" display="block" gutterBottom>
-                            Register
+                            Login
                         </Typography>
                     </button>
                 </div>
             </form>
-        </Card>
+        </>
     );
 }
 
-export const RegisterForm = reduxForm({form: 'registerForm', validate, warn})(Form);
+export const LoginForm = reduxForm({form: 'loginForm', validate, warn})(Form);

@@ -1,8 +1,7 @@
+import { Typography, Card } from '@material-ui/core';
+import { Paginate, ItemComponent } from "@components/MainComponent";
+import { Loader } from "@common/components";
 import { Post } from "@common/types";
-import { ItemComponent } from "./ItemComponent";
-import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import { Paginate } from "@components/Paginate/Paginate";
 
 interface ListComponentProps {
     posts: Post[];
@@ -10,16 +9,16 @@ interface ListComponentProps {
     deletePost: any;
     changePage: any;
     pageCount: any;
+    isPostsLoading: boolean;
+    listTitle: string;
 }
 
-export const ListComponent = ({ posts, editPost, deletePost, 
-    changePage, pageCount }: ListComponentProps) => {
+export const ListComponent = ({ posts, editPost, deletePost, changePage, 
+    pageCount, isPostsLoading, listTitle }: ListComponentProps) => {
     return (
         <Card className="list_component">
-            <Typography variant="h5" gutterBottom>
-                Posts List
-             </Typography>
-            <div>
+            <Typography variant="h5" gutterBottom>{listTitle}</Typography>
+             {isPostsLoading && <Loader />}
                 {posts?.map(post => (
                     <ItemComponent 
                         key={post.id}
@@ -28,7 +27,6 @@ export const ListComponent = ({ posts, editPost, deletePost,
                         deletePost={deletePost}
                     />
                 ))}
-            </div>
             <Paginate
                 pageCount={pageCount}
                 changePage={changePage}

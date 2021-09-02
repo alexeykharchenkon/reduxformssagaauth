@@ -13,8 +13,8 @@ export const Paginate = ({pageCount, changePage} : PaginateProps) => {
             breakLabel={'...'}
             breakClassName={'break-me'}
             pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
+            marginPagesDisplayed={1}
+            pageRangeDisplayed={2}
             onPageChange={(data: any) => changePage(data.selected)}
             containerClassName={'pagination'}
             activeClassName={'active'}

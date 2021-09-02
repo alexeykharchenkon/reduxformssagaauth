@@ -10,11 +10,11 @@ const getPostForPage = (posts: Post[], itemsPerPage: number, page: number) => {
     const from = page * itemsPerPage;
     const to = from + itemsPerPage; 
   
-    return posts.slice(from, to);
+    return posts?.slice(from, to);
   }
   
 const pageCountCalc = (posts: Post[], itemsPerPage: number) => {
-      return posts.length/itemsPerPage;
+      return posts?.length/itemsPerPage;
   }
   
 export const mapStateToProps = (state: any) => ({
@@ -28,7 +28,8 @@ export const mapStateToProps = (state: any) => ({
     mesText: state.messageState.text,
     isOpen: state.messageState.isOpen,
     authMessage: state.userState.message, 
-    authType: state.userState.type 
+    authType: state.userState.type,
+    isPostsLoading: state.postsState.isLoaded 
   });
   
 export const mapDispatchToProps = (dispatch: any) => ({

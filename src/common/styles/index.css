@@ -1,7 +1,11 @@
 .app_container {
     background-color: aliceblue;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
 }
 
 .app {
@@ -9,10 +13,10 @@
     justify-content: space-between;
     align-items: flex-start;
     background-color: aliceblue;
-    height: 100%;
-    width: 100%;
+    height: 100vh;
     padding: 15px;
     width: 950px;
+    margin-top: 50px;
 }
 
 .list_component {
@@ -46,6 +50,12 @@
     display: flex;
     flex-direction: row;
     padding: 10px;
+    align-items: center;
+}
+
+.list_item_buttons button{
+    align-self: center;
+    height: 45px;
 }
 
 .rightbar_component {
@@ -109,6 +119,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 15px; 
+    width: 250px;
 }
 
 .login_register_switch button {
@@ -126,9 +138,17 @@
     cursor: pointer;
 }
 
+.login_register_switch_user {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .pagination {
     list-style: none;
     display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 
@@ -152,4 +172,19 @@ li.active {
 }
 .pagination li a {
     padding: 10px;
+}
+
+.navbar {
+}
+
+.toolbar {
+    background-color: cornsilk;
+}
+
+.post {
+
+}
+
+.post_buttons {
+    
 }

@@ -1,49 +1,61 @@
-import { ADD_POST, UPDATE_POST, DELETE_POST, EDIT_POST } from "@store/actions";
+import { LOAD_POSTS_STARTED, ADD_POST_SUCCESS, UPDATE_POST_SUCCESS, DELETE_POST_SUCCESS, EDIT_POST, LOAD_POSTS_SUCCESS } from "@store/actions";
 import { Post } from "@common/types";
 
 const initialState = {
-    posts: [{
+    posts: [/*{
         id: '100',
         title: 'First Post',
         text: 'First Post Text'
-    }],
-    activePost: undefined
+    }*/],
+    activePost: undefined,
+    isLoaded: false,
 }
 
 export const postsReducer = (state: any = initialState, action: any) => {
     switch(action.type) {
-        case ADD_POST:
+        case LOAD_POSTS_STARTED:
+            return {
+                ...state,
+                isLoaded: true
+            }
+        case LOAD_POSTS_SUCCESS:
+            return {
+                ...state,
+                posts: action.payload.posts,
+                isLoaded: false
+            }
+        case ADD_POST_SUCCESS:
             return {
                 ...state,
                 posts: [...state.posts, {
-                    id: action.payload.id,
-                    title: action.payload.title,
-                    text: action.payload.text
+                    id: action.payload.post.id,
+                    title: action.payload.post.title,
+                    text: action.payload.post.text
                 }]
             }
-        case UPDATE_POST:
+        case UPDATE_POST_SUCCESS:
             return {
                 ...state,
                 activePost: undefined,
                 posts: state.posts?.map((post: Post) => (
-                    post.id === action.payload.id ?
+                    post.id === action.payload.post.id ?
                         ({
-                            id: action.payload.id,
-                            title: action.payload.title,
-                            text: action.payload.text 
+                            id: action.payload.post.id,
+                            title: action.payload.post.title,
+                            text: action.payload.post.text 
                         })
                         : (post)
                     ))
                 }
-        case DELETE_POST:
+        case DELETE_POST_SUCCESS:
             return {
                  ...state,
-                posts: state.posts.filter((p: Post) => p.id !== action.payload)
+                posts: state.posts.filter((p: Post) => p.id !== action.payload.id)
             }
         case EDIT_POST:
             return {
                 ...state,
-                activePost: state.posts.find((p: Post) => p.id === action.payload)
+                activePost: state.posts.find((p: Post) => p.id === action.payload.id)
             }
         default:
             return state;

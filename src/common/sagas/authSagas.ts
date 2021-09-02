@@ -4,7 +4,6 @@ import { USER_LOGIN, USER_REGISTER, GET_PROFILE } from "@store/actions";
 import axios from "axios";
 
 const authUrl = "https://localhost:44370/api/Users";
-const postUrl = "https://localhost:44370/api/Posts";
 
 function* watchLogin() { yield takeEvery(USER_LOGIN, loginAsync)}
 function* watchRegister() { yield takeEvery(USER_REGISTER, registerAsync)}
@@ -53,7 +52,7 @@ function* getProfileAsync() : any {
 
   try {
     const data = yield call(() =>
-    axios.post(authUrl + "/loginJwt", 
+    axios.get(authUrl + "/loginJwt", 
       {
         headers: {
         "Accept": "application/json",
@@ -68,7 +67,7 @@ function* getProfileAsync() : any {
   }
 }
 
-export default [
+export const authSagas = [
     watchLogin(),
     watchRegister(),
     watchGetProfile() 
