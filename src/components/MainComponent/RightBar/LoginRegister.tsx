@@ -4,12 +4,12 @@ import { LOGIN_FORM_ACTIVE, REGISTER_FORM_ACTIVE } from "@common/types/states";
 import { LoginRegisterSwitcher, LoginForm, RegisterForm } from "@components/MainComponent";
 
 interface LoginRegisterProps {
-    loginSubmit: any;
-    registerSubmit: any;
-    loginFormChange: any;
+    loginSubmit: (values: any) => void;
+    registerSubmit: (values: any) => void;
+    loginFormChange: (type: string) => void;
     user: User;
-    logState: any;
-    logout: any;
+    logState: string;
+    logout: () => void;
 }
 
 export const LoginRegister = ({ loginSubmit, registerSubmit, user, 

@@ -58,7 +58,6 @@ function* updateAsync({ payload }: any) : any {
       }
 }
 
-
 export const postSagas = [
     watchLoad(),
     watchUpdate(),

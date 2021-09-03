@@ -4,6 +4,7 @@ import { MainComponent } from "./MainComponent";
 import { Paginate } from "./Paginate/Paginate";
 import { PostComponent } from "./Post/PostComponent";
 import { PostForm } from "./PostForm/PostForm";
+import { PostsFilter } from "./PostsFilter/PostsFilter";
 import { LoginRegisterSwitcher, RightBar, LoginRegister } from "./RightBar";
 
 export {
@@ -17,6 +18,7 @@ export {
     RightBar,
     PostForm,
     LoginRegister,
-    PostComponent
+    PostComponent,
+    PostsFilter
 }
 

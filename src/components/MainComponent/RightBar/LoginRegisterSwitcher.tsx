@@ -4,9 +4,9 @@ import { User } from '@common/types';
 import { USER_FORM_ACTIVE } from '@common/types/states';
 
 interface RightBarProps {
-    loginFormChange: any;
-    logState: any;
-    logout: any;
+    loginFormChange: (type: string) => void;
+    logState: string;
+    logout: () => void;
     user: User;
 }
 

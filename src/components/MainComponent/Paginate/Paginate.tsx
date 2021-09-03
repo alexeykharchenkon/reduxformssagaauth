@@ -2,7 +2,7 @@ import ReactPaginate from 'react-paginate';
 
 interface PaginateProps {
     pageCount: number;
-    changePage: any;
+    changePage: (data: any) => void;
 }
 
 export const Paginate = ({pageCount, changePage} : PaginateProps) => {

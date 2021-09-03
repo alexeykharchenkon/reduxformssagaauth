@@ -31,6 +31,20 @@ const renderField = ({input, label, type, meta: { touched, error, warning }}: an
     </div>
   )
 
+  const renderTextarea = ({textarea, label, meta: { touched, error, warning }}: any) => (
+    <div>
+        <label htmlFor="text">
+            <Typography variant="subtitle1" gutterBottom>{label}</Typography>
+        </label>
+      <div>
+        <Field name="text" component="textarea" placeholder={label} className="post_form_textarea"/>
+        {touched &&
+          ((error && <span className="error">{error}</span>) ||
+            (warning && <span>{warning}</span>))}
+      </div>
+    </div>
+  )
+
 const Form = ({ handleSubmit, reset, initialized }: InjectedFormProps) => {
     return (
         <Card className="form_component">
@@ -40,24 +54,14 @@ const Form = ({ handleSubmit, reset, initialized }: InjectedFormProps) => {
             <form onSubmit={handleSubmit} className="form">
                 <Field name="id" component="input" hidden /> 
                 <Field name="title" type="text" component={renderField} label="Title"/>
-                <Field name="text" type="text" component={renderField} label="Text"/>
+                <Field name="text" component={renderTextarea} label="Text"/>
                 <div className="form_buttons">
                     <button type="button" onClick={reset}>
-                        <Typography variant="button" display="block" gutterBottom>
-                            Reset
-                        </Typography>
+                        Reset
                     </button>
                     <button type="submit">
-                        {!initialized && <span>
-                            <Typography variant="button" display="block" gutterBottom>
-                                Add Post
-                            </Typography>
-                         </span>}
-                        {initialized && <span>
-                            <Typography variant="button" display="block" gutterBottom>
-                                Save Post
-                            </Typography>
-                            </span>}   
+                        {!initialized && <span>Add Post</span>}
+                        {initialized && <span>Save Post</span>}   
                     </button>
                 </div>
             </form>

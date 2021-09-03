@@ -3,13 +3,13 @@ import { User } from "@common/types";
 import { PostForm, LoginRegister} from "@components/MainComponent";
 
 interface RightBarProps {
-    handleSubmit: any;
-    loginSubmit: any;
-    registerSubmit: any;
-    loginFormChange: any;
+    handleSubmit: (values: any) => void;
+    loginSubmit: (values: any) => void;
+    registerSubmit: (values: any) => void;
+    loginFormChange: (type: string) => void;
     user: User;
-    logState: any;
-    logout: any;
+    logState: string;
+    logout: () => void;
 }
 
 export const RightBar = ({ handleSubmit, loginSubmit, registerSubmit, user, 

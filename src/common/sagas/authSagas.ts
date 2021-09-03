@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { loginSuccess, registerSuccess, loginFailure } from "@store/actionCreators/authActions";
+import { loginSuccess, registerSuccess, loginFailure, logoutSuccess } from "@store/actionCreators/authActions";
 import { USER_LOGIN, USER_REGISTER, GET_PROFILE } from "@store/actions";
 import axios from "axios";
 
@@ -7,6 +7,7 @@ const authUrl = "https://localhost:44370/api/Users";
 
 function* watchLogin() { yield takeEvery(USER_LOGIN, loginAsync)}
 function* watchRegister() { yield takeEvery(USER_REGISTER, registerAsync)}
+function* watchLogout() { yield takeEvery(USER_REGISTER, logout)}
 function* watchGetProfile() { yield takeEvery(GET_PROFILE, getProfileAsync)}
 
 function* loginAsync({ payload }: any) : any {
@@ -67,9 +68,15 @@ function* getProfileAsync() : any {
   }
 }
 
+function* logout({ payload }: any) : any {
+  localStorage.removeItem("token");
+    yield put(logoutSuccess());
+}
+
 export const authSagas = [
     watchLogin(),
     watchRegister(),
-    watchGetProfile() 
+    watchGetProfile(),
+    watchLogout(), 
   ];
   

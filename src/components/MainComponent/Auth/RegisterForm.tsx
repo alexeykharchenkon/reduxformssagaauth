@@ -41,9 +41,7 @@ const Form = ({ handleSubmit, reset }: InjectedFormProps) => {
                 <Field name="password" type="password" component={renderField} label="Password"/>
                 <div className="form_buttons">
                     <button type="submit">
-                        <Typography variant="button" display="block" gutterBottom>
                             Register
-                        </Typography>
                     </button>
                 </div>
             </form>

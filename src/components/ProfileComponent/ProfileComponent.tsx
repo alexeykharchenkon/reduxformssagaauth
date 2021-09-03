@@ -1,4 +1,3 @@
-import '@styles/index.css';
 import { User } from '@common/types';
 
 interface AppProps {

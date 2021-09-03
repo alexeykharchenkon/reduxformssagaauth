@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+    box-sizing: border-box; 
+    font-family: 'Roboto', sans-serif;
+}
 .app_container {
     background-color: aliceblue;
     display: flex;
@@ -36,6 +42,15 @@
     border: 1px solid burlywood;
     width: 580px;
     margin-bottom: 10px;
+}
+
+.item_navlink {
+    text-decoration: none;
+    color: black;
+}
+.item_navlink:hover {
+    text-decoration: none;
+    color: burlywood;
 }
 
 .list_item_text{
@@ -88,6 +103,34 @@
     border-radius: 5%;
     border: 1px solid burlywood;
     margin-bottom: 15px;
+    padding: 10px;
+    box-sizing: border-box; 
+}
+
+.post_form_textarea {
+    background: #fce9c0;
+    border: 1px solid burlywood;
+    padding: 10px;
+    width: 100%;
+    height: 100px; 
+    box-sizing: border-box; 
+    font-size: 14px;
+    margin-bottom: 15px;
+    resize: none;
+    border-radius: 3%;
+}
+
+.post_text {
+    background: #fce9c0;
+    border: 1px solid burlywood;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box; 
+    font-size: 14px;
+    margin-bottom: 15px;
+    resize: none;
+    border-radius: 3%;
 }
 
 .form_buttons {
@@ -102,6 +145,8 @@
     border-radius: 5%;
     background-color: burlywood;
     margin-right: 15px;
+    font-size: 16px;
+    text-transform: uppercase;
 }
 
 .form_buttons button:hover{
@@ -149,6 +194,7 @@
     list-style: none;
     display: flex;
     align-items: center;
+    align-self: center;
     justify-content: space-between;
 }
 
@@ -159,6 +205,9 @@
     background-color: cornsilk;
     color: black;
     font-weight: bolder;
+}
+.pagination li:last-child {
+    margin-right: 60px;
 }
 
 .pagination li:hover {
@@ -182,9 +231,28 @@ li.active {
 }
 
 .post {
-
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid blanchedalmond;
 }
 
 .post_buttons {
-    
+    margin-top: 15px;
+}
+
+.posts_filter {
+    margin-bottom: 10px;
+}
+
+.new_item {
+    color: green;
+}
+
+.visited_item {
+    color:indigo;
 }

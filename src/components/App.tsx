@@ -1,87 +1,96 @@
-import '@styles/index.css';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Route, Switch } from "react-router-dom";
+import '@styles/index.css';
 import { User, Post } from '@common/types';
 import { mapDispatchToProps, mapStateToProps } from '@services/initAppProps';
 import { MessageComponent, Navbar } from '@common/components';
 import { MainComponent } from '@components/MainComponent';
-import { Route, Switch } from "react-router-dom";
-import { ProfileComponent } from './Profile/ProfileComponent';
+import { ProfileComponent } from '@components/ProfileComponent';
 
 interface AppProps {
-  activePost: any;
   initializePost: any;
   postsActions: any;
   pageActions: any;
   authActions: any;
+  messageActions: any;
+  filterActions: any;
+  activePost: Post;
   posts: Post[];
   user: User;
   isLogged: boolean;
-  loginFormState: any;
-  pageCount: any;
-  mesType: any;
+  loginFormState: string;
+  pageCount: number;
+  mesType: string;
   mesText: string;
   isOpen: boolean;
-  messageActions: any;
   authMessage: string;
-  authType: any;
+  authType: string;
   isPostsLoading: boolean;
+  currentPost: Post | undefined;
+  filter: string;
 }
 
 const App = ({ activePost, initializePost, postsActions, authActions, posts, 
   user, isLogged, loginFormState, pageCount, pageActions, mesType, mesText, 
-  isOpen, messageActions, authMessage, authType, isPostsLoading }: AppProps) => {
+  isOpen, messageActions, authMessage, authType, isPostsLoading, currentPost, 
+  filter, filterActions }: AppProps) => {
  
-  const {addPost, editPost, updatePost, deletePost, loadPosts} = postsActions; 
-  const {login, register, logout, getProfile, loginFormChange} = authActions;
-  const {changePage} = pageActions;
-  const {openMessage, closeMessage} = messageActions;
+  const { addPost, editPost, updatePost, deletePost, loadPosts, getPost } = postsActions; 
+  const { login, register, logout, getProfile, loginFormChange } = authActions;
+  const { changePage } = pageActions;
+  const { openMessage, closeMessage } = messageActions;
+  const { setFilter } = filterActions;
 
-   const handleSubmit = (values: any) => {
-     isLogged ?
-        Boolean(activePost) ? updatePost({...values}) : addPost({...values/*, id: uuidv4()*/})
-        : openMessage({type: "error", text: "Authorisation is Required!"});
+  const handleSubmit = (values: any) => { 
+    isLogged 
+    ?
+      Boolean(activePost) ? updatePost({...values}) : addPost({...values, isNew: true})
+    : 
+      openMessage({type: "error", text: "Authorisation is Required!"});  
   }
+
   const loginSubmit = (values: any) => login({...values});
   const registerSubmit = (values: any) => register({...values});
-  const logoutSubmit = () => {
-    localStorage.removeItem("token");
-    logout();
-  }
+  const logoutSubmit = () => logout();
+  const clickItem = (post: Post) => updatePost({...post, isNew: false});
 
-  useEffect (() => loadPosts(), [loadPosts])
+  useEffect(() => loadPosts(), [loadPosts])
   useEffect(() => getProfile(), [getProfile]);
   useEffect(() => initializePost(activePost), [activePost, initializePost]);
   useEffect(() => authMessage !== "" && 
-    openMessage({type: authType, text: authMessage}), 
-    [authMessage, authType, openMessage]);
+    openMessage({type: authType, text: authMessage}), [authMessage, authType, openMessage]);
 
   return (
     <div className="app_container">
       <Navbar/>
       <Switch>
-        <Route exact path='/' render={() => 
+        <Route path='/profile'>
+          <ProfileComponent 
+            user={user}
+          />
+        </Route>
+        <Route path='/'>
           <MainComponent 
              posts={posts}
              editPost={editPost}
              deletePost={deletePost}
              changePage={changePage}
-             pageCount={pageCount}
-             isPostsLoading={isPostsLoading}
+             loginFormChange={loginFormChange}
+             setFilter={setFilter}
+             clickItem={clickItem}
              handleSubmit={handleSubmit}
              loginSubmit={loginSubmit}
              registerSubmit={registerSubmit}
-             loginFormChange={loginFormChange}
+             logout={logoutSubmit}
              user={user}
              logState={loginFormState}
-             logout={logoutSubmit}
+             currentPost={currentPost}
+             filter={filter}
+             isPostsLoading={isPostsLoading}
+             pageCount={pageCount}
            />
-        } />
-        <Route exact path='/profile' render={() => 
-          <ProfileComponent 
-            user={user}
-          />
-        }/>
+        </Route>
       </Switch>
       <MessageComponent 
         isOpen={isOpen}
