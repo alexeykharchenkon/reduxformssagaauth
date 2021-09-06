@@ -1,4 +1,4 @@
-import { GET_POST, LOAD_POSTS_STARTED, ADD_POST_SUCCESS, UPDATE_POST_SUCCESS, DELETE_POST_SUCCESS, EDIT_POST, LOAD_POSTS_SUCCESS } from "@store/actions";
+import { LOAD_POSTS_STARTED, ADD_POST_SUCCESS, UPDATE_POST_SUCCESS, DELETE_POST_SUCCESS, EDIT_POST, LOAD_POSTS_SUCCESS, GET_POST_SUCCESS } from "@store/actions";
 import { Post } from "@common/types";
 
 const initialState = {
@@ -14,12 +14,13 @@ const initialState = {
 
 export const postsReducer = (state: any = initialState, action: any) => {
     switch(action.type) {
-        case GET_POST:
+        case GET_POST_SUCCESS:
             return {
                 ...state,
-                currentPost: state.posts.find((p: Post) => p.id === action.payload.id)
+                currentPost: action.payload.post
             }
-        case LOAD_POSTS_STARTED: return { ...state, isLoaded: true }
+        case LOAD_POSTS_STARTED: 
+            return { ...state, isLoaded: true }
         case LOAD_POSTS_SUCCESS:
             return {
                 ...state,
@@ -38,20 +39,16 @@ export const postsReducer = (state: any = initialState, action: any) => {
                 currentPost: action.payload.post,
                 posts: state.posts?.map((post: Post) => (
                     post.id === action.payload.post.id ?
-                        ({
-                            ...post,
-                            ...action.payload.post
-                        })
-                        : (post)
+                        ({ ...action.payload.post }) : (post)
                     ))
                 }
         case DELETE_POST_SUCCESS:
             return {
                  ...state,
-                posts: state.posts.filter((p: Post) => p.id !== action.payload.id)
+                posts: state.posts.filter((p: Post) => p.id !== action.payload.id),
+                currentPost: undefined
             }
         case EDIT_POST:
-            console.log("edit")
             return {
                 ...state,
                 activePost: state.posts.find((p: Post) => p.id === action.payload.id)

@@ -15,6 +15,9 @@ const logoutSuccess = () => ({ type: USER_LOGOUT_SUCCESS });
 
 const loginFormChange = (formState: any) => ({ type: LOGIN_FORM_CHANGE, payload: {formState} });
 
+const getAuthor = (user: User) => ({type: USER_LOGIN, payload: {user} });
+const getAuthorSuccess = (user: User) => ({ type: USER_LOGIN_SUCCESS, payload: {user} });
+
 export {
     login,
     loginFailure,
@@ -24,5 +27,7 @@ export {
     getProfile,
     logout,
     loginFormChange,
-    logoutSuccess
+    logoutSuccess,
+    getAuthor,
+    getAuthorSuccess
 }

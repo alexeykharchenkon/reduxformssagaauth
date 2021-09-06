@@ -10,6 +10,7 @@ interface MainProps {
   isPostsLoading: boolean;
   currentPost: Post | undefined;
   filter: string;
+  isLogged: boolean;
   editPost: (id: string) => void;
   deletePost: (id: string) => void;
   changePage: (values: any) => void;
@@ -20,12 +21,13 @@ interface MainProps {
   logout: () => void;
   clickItem: (post: Post) => void;
   setFilter: (filter: string) => void;
+  getPost: (id: string) => void;
 }
 
 export const MainComponent = ({ posts, user, logState, pageCount, 
   isPostsLoading, editPost, deletePost, changePage, handleSubmit, loginSubmit,
-  registerSubmit, loginFormChange, logout, clickItem, currentPost,
-  filter, setFilter } : MainProps) => {
+  registerSubmit, loginFormChange, logout, clickItem, currentPost, filter, 
+  setFilter, getPost, isLogged } : MainProps) => {
 
   return (
       <div className="app">
@@ -35,6 +37,9 @@ export const MainComponent = ({ posts, user, logState, pageCount,
               editPost={editPost}
               deletePost={deletePost}
               post={currentPost}
+              getPost={getPost}
+              isLogged={isLogged}
+              user={user}
             />
           </Route>
           <Route exact path='/'>
@@ -49,6 +54,8 @@ export const MainComponent = ({ posts, user, logState, pageCount,
               isPostsLoading={isPostsLoading}
               listTitle="Posts List"
               filter={filter}
+              isLogged={isLogged}
+              user={user}
             />
           </Route>
         </Switch>

@@ -31,10 +31,10 @@ interface AppProps {
   filter: string;
 }
 
-const App = ({ activePost, initializePost, postsActions, authActions, posts, 
-  user, isLogged, loginFormState, pageCount, pageActions, mesType, mesText, 
-  isOpen, messageActions, authMessage, authType, isPostsLoading, currentPost, 
-  filter, filterActions }: AppProps) => {
+const App = ({ activePost, initializePost, postsActions, authActions, posts, user, 
+  isLogged, loginFormState, pageCount, pageActions, mesType, mesText, isOpen, 
+  messageActions, authMessage, authType, isPostsLoading, currentPost, filter, 
+  filterActions }: AppProps) => {
  
   const { addPost, editPost, updatePost, deletePost, loadPosts, getPost } = postsActions; 
   const { login, register, logout, getProfile, loginFormChange } = authActions;
@@ -42,13 +42,11 @@ const App = ({ activePost, initializePost, postsActions, authActions, posts,
   const { openMessage, closeMessage } = messageActions;
   const { setFilter } = filterActions;
 
-  const handleSubmit = (values: any) => { 
-    isLogged 
-    ?
-      Boolean(activePost) ? updatePost({...values}) : addPost({...values, isNew: true})
-    : 
+  const handleSubmit = (values: any) => isLogged ?
+      Boolean(activePost) ? 
+        updatePost({...values}) : addPost({...values, isNew: true, userId: user.id}) 
+      : 
       openMessage({type: "error", text: "Authorisation is Required!"});  
-  }
 
   const loginSubmit = (values: any) => login({...values});
   const registerSubmit = (values: any) => register({...values});
@@ -59,7 +57,7 @@ const App = ({ activePost, initializePost, postsActions, authActions, posts,
   useEffect(() => getProfile(), [getProfile]);
   useEffect(() => initializePost(activePost), [activePost, initializePost]);
   useEffect(() => authMessage !== "" && 
-    openMessage({type: authType, text: authMessage}), [authMessage, authType, openMessage]);
+    openMessage({type: authType, text: authMessage}), [authMessage, authType, openMessage]); 
 
   return (
     <div className="app_container">
@@ -89,6 +87,8 @@ const App = ({ activePost, initializePost, postsActions, authActions, posts,
              filter={filter}
              isPostsLoading={isPostsLoading}
              pageCount={pageCount}
+             getPost={getPost}
+             isLogged={isLogged}
            />
         </Route>
       </Switch>

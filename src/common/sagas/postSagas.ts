@@ -1,7 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import axios from "axios";
-import { ADD_POST, DELETE_POST, LOAD_POSTS, UPDATE_POST } from "@store/actions";
-import { loadPostsStarted, loadPostsFailure, loadPostsSuccess, addPostFailure, addPostSuccess, deletePostFailure, deletePostSuccess, updatePostFailure, updatePostSuccess } from "@store/actionCreators/postsActions";
+import { ADD_POST, DELETE_POST, GET_POST, LOAD_POSTS, UPDATE_POST } from "@store/actions";
+import { loadPostsStarted, loadPostsFailure, loadPostsSuccess, addPostFailure, addPostSuccess, deletePostFailure, deletePostSuccess, updatePostFailure, updatePostSuccess, getPostSuccess, getPostFailure } from "@store/actionCreators/postsActions";
 
 const postUrl = "https://localhost:44370/api/Posts";
 const headers =  { 
@@ -13,9 +13,20 @@ const headers =  {
 
 function* watchLoad() { yield takeEvery(LOAD_POSTS, loadAsync)}
 function* watchAdd() { yield takeEvery(ADD_POST, addAsync)}
+function* watchGetPost() { yield takeEvery(GET_POST, getPostAsync)}
 function* watchDelete() { yield takeEvery(DELETE_POST, deleteAsync)}
 function* watchUpdate() { yield takeEvery(UPDATE_POST, updateAsync)}
 
+
+function* getPostAsync({ payload }: any) : any {    
+    try {
+        const post = yield call(() => axios.get(postUrl + `/${payload.id.id}`)
+        .then(res => res.data));
+        yield put(getPostSuccess(post));
+      } catch (error) {
+          yield put(getPostFailure(error));
+      }
+}
 function* loadAsync({ payload }: any) : any {
     yield put(loadPostsStarted());
     
@@ -30,6 +41,8 @@ function* addAsync({ payload }: any) : any {
     try {
         const post = yield call(() => 
             axios.post(postUrl, payload.post, headers).then(res => res.data));
+
+            console.log(post)
 
         yield put(addPostSuccess(post));
       } catch (error) {
@@ -63,4 +76,5 @@ export const postSagas = [
     watchUpdate(),
     watchAdd(),
     watchDelete(),
+    watchGetPost()
 ];

@@ -35,3 +35,6 @@ export const GET_PROFILE = "GET_PROFILE";
 
 export const SET_FILTER = "SET_FILTER";
 export const SHOW_ALL = "SHOW_ALL";
+
+export const GET_AUTHOR = "GET_AUTHOR";
+export const GET_AUTHOR_SUCCESS = "GET_AUTHOR_SUCCESS";
