@@ -1,12 +1,13 @@
 import { Checkbox } from '@material-ui/core';
 import { SHOW_VIEWED, SHOW_ALL, SHOW_NEW } from '@common/types/states';
+import { memo } from 'react';
 
 interface PostsFilterProps {
     setFilter: any;
     filter: any;
 }
 
-export const PostsFilter = ({setFilter, filter} : PostsFilterProps) => {
+export const PostsFilter = memo(({setFilter, filter} : PostsFilterProps) => {
   return (
         <div className="posts_filter">
           Show All
@@ -29,5 +30,5 @@ export const PostsFilter = ({setFilter, filter} : PostsFilterProps) => {
           />
         </div>
   );
-}
+});
 

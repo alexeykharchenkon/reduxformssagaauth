@@ -1,7 +1,8 @@
 import { Typography, Card } from '@material-ui/core';
-import { Paginate, ItemComponent, PostsFilter } from "@components/MainComponent";
+import { Paginate, PostsFilter, ListItem } from "@components/MainComponent";
 import { Loader } from "@common/components";
-import { Post, User } from "@common/types";
+import { Post} from "@common/types";
+import { memo } from 'react';
 
 interface ListComponentProps {
     editPost: (id: string) => void;
@@ -15,13 +16,12 @@ interface ListComponentProps {
     listTitle: string;
     filter: string;
     isLogged: boolean;
-    user: User;
 }
     
-
-export const ListComponent = ({ posts, editPost, deletePost, changePage, pageCount, 
-    isPostsLoading, listTitle, filter, setFilter, clickItem, isLogged, user }: ListComponentProps) => {
-    return (
+export const ListComponent = memo(({ posts, editPost, deletePost, changePage, pageCount, 
+    isPostsLoading, listTitle, filter, setFilter, clickItem, isLogged }: ListComponentProps) => {
+        console.log("listCom")
+        return (
         <Card className="list_component">
             <Typography variant="h5" gutterBottom>{listTitle}</Typography>
             <PostsFilter
@@ -29,21 +29,17 @@ export const ListComponent = ({ posts, editPost, deletePost, changePage, pageCou
                 setFilter={setFilter}
             />
              {isPostsLoading && <Loader />}
-                {posts?.map(post => (
-                    <ItemComponent 
-                        key={post.id}
-                        post={post}
-                        editPost={editPost}
-                        deletePost={deletePost}
-                        clickItem={clickItem}
-                        isLogged={isLogged}
-                        user={user}
-                    />
-                ))}
+            <ListItem
+                posts={posts}
+                isLogged={isLogged}
+                editPost={editPost}
+                deletePost={deletePost}
+                clickItem={clickItem}
+            />
             <Paginate
                 pageCount={pageCount}
                 changePage={changePage}
             />
         </Card>
     );
-}
+});

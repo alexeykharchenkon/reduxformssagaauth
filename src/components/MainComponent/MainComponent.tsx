@@ -1,6 +1,7 @@
 import { Route, Switch } from "react-router-dom";
 import { RightBar, ListComponent, PostComponent } from '@components/MainComponent';
 import { User, Post } from '@common/types';
+import { memo } from "react";
 
 interface MainProps {
   posts: Post[];
@@ -24,10 +25,11 @@ interface MainProps {
   getPost: (id: string) => void;
 }
 
-export const MainComponent = ({ posts, user, logState, pageCount, 
+export const MainComponent = memo(({ posts, user, logState, pageCount, 
   isPostsLoading, editPost, deletePost, changePage, handleSubmit, loginSubmit,
   registerSubmit, loginFormChange, logout, clickItem, currentPost, filter, 
   setFilter, getPost, isLogged } : MainProps) => {
+    console.log("main")
 
   return (
       <div className="app">
@@ -36,10 +38,9 @@ export const MainComponent = ({ posts, user, logState, pageCount,
             <PostComponent 
               editPost={editPost}
               deletePost={deletePost}
-              post={currentPost}
               getPost={getPost}
+              post={currentPost}
               isLogged={isLogged}
-              user={user}
             />
           </Route>
           <Route exact path='/'>
@@ -55,7 +56,6 @@ export const MainComponent = ({ posts, user, logState, pageCount,
               listTitle="Posts List"
               filter={filter}
               isLogged={isLogged}
-              user={user}
             />
           </Route>
         </Switch>
@@ -70,4 +70,4 @@ export const MainComponent = ({ posts, user, logState, pageCount,
         />
       </div>
   );
-}
+});

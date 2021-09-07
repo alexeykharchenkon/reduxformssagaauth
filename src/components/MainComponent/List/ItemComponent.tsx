@@ -1,19 +1,19 @@
-import { Post, User } from "@common/types";
+import { Post } from "@common/types";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { Card, Typography, IconButton } from '@material-ui/core';
 import { NavLink } from "react-router-dom";
+import { memo } from "react";
 
 interface ItemComponentProps {
     post: Post;
-    user: User;
     isLogged: boolean;
     editPost: (id: string) => void;
     deletePost: (id: string) => void;
     clickItem: (post: Post) => void;
 }
 
-export const ItemComponent = ({post, user, isLogged, editPost, deletePost, clickItem}: ItemComponentProps ) => {
+export const ItemComponent = memo(({post, isLogged, editPost, deletePost, clickItem}: ItemComponentProps ) => {
     return (
         <Card className="list_item">
             <div className="list_item_text">
@@ -59,4 +59,4 @@ export const ItemComponent = ({post, user, isLogged, editPost, deletePost, click
             }
         </Card>
     );
-}
+});

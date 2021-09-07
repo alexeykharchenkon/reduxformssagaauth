@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 
@@ -13,9 +13,8 @@ interface MessageComponentProps {
     closeMessage: () => void;
 }
 
-export const MessageComponent = ({isOpen, message, type, closeMessage}: MessageComponentProps) => {
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) =>  closeMessage();
-    
+export const MessageComponent = memo(({isOpen, message, type, closeMessage}: MessageComponentProps) => {
+  const handleClose = () => closeMessage();
   return (
     <div>
       <Snackbar 
@@ -30,4 +29,4 @@ export const MessageComponent = ({isOpen, message, type, closeMessage}: MessageC
       </Snackbar>
     </div>
   );
-}
+});

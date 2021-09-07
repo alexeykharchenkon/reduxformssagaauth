@@ -1,5 +1,6 @@
 import { Field, reduxForm, InjectedFormProps, reset } from 'redux-form';
 import { Typography, Card } from '@material-ui/core';
+import { memo } from 'react';
 
 const resetForm = (result: any, dispatch: any) => dispatch(reset('postForm'));
 
@@ -31,7 +32,7 @@ const renderField = ({input, label, type, meta: { touched, error, warning }}: an
     </div>
   )
 
-  const renderTextarea = ({textarea, label, meta: { touched, error, warning }}: any) => (
+  const renderTextarea = ({label, meta: { touched, error, warning }}: any) => (
     <div>
         <label htmlFor="text">
             <Typography variant="subtitle1" gutterBottom>{label}</Typography>
@@ -45,7 +46,7 @@ const renderField = ({input, label, type, meta: { touched, error, warning }}: an
     </div>
   )
 
-const Form = ({ handleSubmit, reset, initialized }: InjectedFormProps) => {
+const Form = memo(({ handleSubmit, reset, initialized }: InjectedFormProps) => {
     return (
         <Card className="form_component">
             <Typography variant="h5" gutterBottom>
@@ -67,7 +68,7 @@ const Form = ({ handleSubmit, reset, initialized }: InjectedFormProps) => {
             </form>
         </Card>
     );
-}
+});
 
 export const PostForm = reduxForm({
     form: 'postForm', 

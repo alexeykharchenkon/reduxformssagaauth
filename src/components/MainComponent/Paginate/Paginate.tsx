@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import ReactPaginate from 'react-paginate';
 
 interface PaginateProps {
@@ -5,7 +6,7 @@ interface PaginateProps {
     changePage: (data: any) => void;
 }
 
-export const Paginate = ({pageCount, changePage} : PaginateProps) => {
+export const Paginate = memo(({pageCount, changePage} : PaginateProps) => {
   return (
           <ReactPaginate
             previousLabel={'previous'}
@@ -20,5 +21,5 @@ export const Paginate = ({pageCount, changePage} : PaginateProps) => {
             activeClassName={'active'}
         />
   );
-}
+});
 

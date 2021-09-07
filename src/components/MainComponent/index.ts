@@ -1,5 +1,5 @@
 import { LoginForm, RegisterForm } from "./Auth";
-import { ItemComponent, ListComponent } from "./List";
+import { ItemComponent, ListComponent, ListItem } from "./List";
 import { MainComponent } from "./MainComponent";
 import { Paginate } from "./Paginate/Paginate";
 import { PostComponent } from "./Post/PostComponent";
@@ -19,6 +19,7 @@ export {
     PostForm,
     LoginRegister,
     PostComponent,
-    PostsFilter
+    PostsFilter,
+    ListItem
 }
 

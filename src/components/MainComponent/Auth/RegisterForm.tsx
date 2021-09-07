@@ -1,5 +1,6 @@
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import Typography from '@material-ui/core/Typography';
+import { memo } from 'react';
 
 const validate = (values: any) => {
     const errors = {login: '', password: ''};
@@ -29,7 +30,7 @@ const renderField = ({input, label, type, meta: { touched, error, warning }}: an
     </div>
   )
 
-const Form = ({ handleSubmit, reset }: InjectedFormProps) => {
+const Form = memo(({ handleSubmit, reset }: InjectedFormProps) => {
     return (
         <>
             <Typography variant="h5" gutterBottom>
@@ -47,6 +48,6 @@ const Form = ({ handleSubmit, reset }: InjectedFormProps) => {
             </form>
         </>
     );
-}
+});
 
 export const RegisterForm = reduxForm({form: 'registerForm', validate, warn})(Form);

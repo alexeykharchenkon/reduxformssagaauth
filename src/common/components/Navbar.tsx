@@ -1,7 +1,8 @@
 import { AppBar, Container, Toolbar, Typography } from "@material-ui/core";
+import { memo } from "react";
 import { NavLink } from "react-router-dom";
 
-export const Navbar = () => {
+export const Navbar = memo(() => {
     return(
         <Container className="navbar">
             <AppBar position="fixed">
@@ -16,4 +17,4 @@ export const Navbar = () => {
             </AppBar>
         </Container>
     );
-}
+});

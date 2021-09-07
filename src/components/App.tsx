@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect} from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from "react-router-dom";
 import '@styles/index.css';
@@ -42,18 +42,25 @@ const App = ({ activePost, initializePost, postsActions, authActions, posts, use
   const { openMessage, closeMessage } = messageActions;
   const { setFilter } = filterActions;
 
-  const handleSubmit = (values: any) => isLogged ?
-      Boolean(activePost) ? 
-        updatePost({...values}) : addPost({...values, isNew: true, userId: user.id}) 
+  const handleSubmit = useCallback((values: any) => 
+    isLogged ?
+      Boolean(activePost) ? updatePost({...values}) : addPost({...values, isNew: true, userId: user.id}) 
       : 
-      openMessage({type: "error", text: "Authorisation is Required!"});  
+      openMessage({type: "error", text: "Authorisation is Required!"}),
+  [updatePost, openMessage, addPost, isLogged, activePost]); 
 
-  const loginSubmit = (values: any) => login({...values});
-  const registerSubmit = (values: any) => register({...values});
-  const logoutSubmit = () => logout();
-  const clickItem = (post: Post) => updatePost({...post, isNew: false});
-
-  useEffect(() => loadPosts(), [loadPosts])
+  const loginSubmit = useCallback((values: any) => login({...values}), [login]);
+  const registerSubmit = useCallback((values: any) => register({...values}), [register]);
+  const logoutSubmit = useCallback(() => logout(), [logout]);
+  const clickItem = useCallback((post: Post) => updatePost({...post, isNew: false}), [updatePost]);
+  const editPostC = useCallback((id: string) => editPost(id), [editPost]);
+  const deletePostC = useCallback((id: string) => deletePost(id), [deletePost]);
+  const changePageC = useCallback((page: any) => changePage(page), [changePage]);
+  const setFilterC = useCallback((filter: string) => setFilter(filter), [setFilter]);
+  const loginFormChangeC = useCallback((state: string) => loginFormChange(state), [loginFormChange]);
+  const getPostC = useCallback((postId: string) => getPost(postId), [getPost]); 
+  
+  useEffect(() => loadPosts(), [loadPosts]);
   useEffect(() => getProfile(), [getProfile]);
   useEffect(() => initializePost(activePost), [activePost, initializePost]);
   useEffect(() => authMessage !== "" && 
@@ -70,24 +77,24 @@ const App = ({ activePost, initializePost, postsActions, authActions, posts, use
         </Route>
         <Route path='/'>
           <MainComponent 
-             posts={posts}
-             editPost={editPost}
-             deletePost={deletePost}
-             changePage={changePage}
-             loginFormChange={loginFormChange}
-             setFilter={setFilter}
+             editPost={editPostC}
+             deletePost={deletePostC}
+             changePage={changePageC}
+             loginFormChange={loginFormChangeC}
+             getPost={getPostC}
+             setFilter={setFilterC}
              clickItem={clickItem}
              handleSubmit={handleSubmit}
              loginSubmit={loginSubmit}
              registerSubmit={registerSubmit}
              logout={logoutSubmit}
+             posts={posts}
              user={user}
              logState={loginFormState}
              currentPost={currentPost}
              filter={filter}
              isPostsLoading={isPostsLoading}
              pageCount={pageCount}
-             getPost={getPost}
              isLogged={isLogged}
            />
         </Route>

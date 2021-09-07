@@ -2,15 +2,16 @@ import { Typography } from '@material-ui/core';
 import { LOGIN_FORM_ACTIVE, REGISTER_FORM_ACTIVE} from "@common/types/states";
 import { User } from '@common/types';
 import { USER_FORM_ACTIVE } from '@common/types/states';
+import { memo } from 'react';
 
 interface RightBarProps {
     loginFormChange: (type: string) => void;
-    logState: string;
     logout: () => void;
+    logState: string;
     user: User;
 }
 
-export const LoginRegisterSwitcher = ({ loginFormChange, logState, logout, user }: RightBarProps) => {
+export const LoginRegisterSwitcher = memo(({ loginFormChange, logState, logout, user }: RightBarProps) => {
     return (
         <div className="login_register_switch">
             {logState === USER_FORM_ACTIVE &&
@@ -41,4 +42,4 @@ export const LoginRegisterSwitcher = ({ loginFormChange, logState, logout, user 
             }
         </div>
     );
-}
+});

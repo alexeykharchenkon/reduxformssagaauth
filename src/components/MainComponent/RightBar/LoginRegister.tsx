@@ -2,6 +2,7 @@ import { Card } from '@material-ui/core';
 import { User } from "@common/types";
 import { LOGIN_FORM_ACTIVE, REGISTER_FORM_ACTIVE } from "@common/types/states";
 import { LoginRegisterSwitcher, LoginForm, RegisterForm } from "@components/MainComponent";
+import { memo } from 'react';
 
 interface LoginRegisterProps {
     loginSubmit: (values: any) => void;
@@ -12,7 +13,7 @@ interface LoginRegisterProps {
     logout: () => void;
 }
 
-export const LoginRegister = ({ loginSubmit, registerSubmit, user, 
+export const LoginRegister = memo(({ loginSubmit, registerSubmit, user, 
     loginFormChange, logState, logout }: LoginRegisterProps) => {
     return (
         <Card className="form_component">
@@ -27,4 +28,4 @@ export const LoginRegister = ({ loginSubmit, registerSubmit, user,
             />  
         </Card> 
     );
-}
+});
